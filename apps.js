@@ -9,7 +9,7 @@ var apps = [
     name: "DRM-play",
     appid: "drmplay",
     url: "http://drm-play.com",
-    text: "Ott плеер drm-play, mod плеера ott-play by Alex "
+    text: " mod плеера ott-play by Alex "
   },
   {
     name: "vokino",
