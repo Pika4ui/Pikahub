@@ -1,0 +1,143 @@
+:root {
+  --cell: 75px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+  background-color: black;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  line-height: normal;
+  font-weight: normal;
+  font-size: calc(10px + 0.9vw);
+}
+
+#grid,
+.text {
+  left: 2vw;
+  width: 96vw;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--cell), 1fr));
+  grid-gap: 25px 17px;
+  position: absolute;
+  top: calc(var(--cell) + 40px);
+}
+
+.cell {
+  display: table-cell;
+  background: url('https://vidaa.surge.sh/favicon.ico') no-repeat center center;
+  background-size: contain;
+}
+
+.text {
+  display: none;
+  position: fixed;
+  margin: calc(-1 * var(--cell) - 25px) 0;
+  z-index: 1;
+  text-align: center;
+  height: calc(var(--cell) + 6px);
+  background-color: #000000c4;
+  color: #fff;
+  width: 100vw;
+  left: 0;
+}
+
+.cell:hover .text {
+  display: block;
+}
+
+.btn,
+.cell {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-radius: 10px;
+  width: var(--cell);
+  height: var(--cell);
+}
+
+.btn {
+  position: absolute;
+  border: 3px solid rgb(91, 108, 108);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.cell:hover .btn {
+  z-index: 10;
+  border: 3px solid white;
+  transform: scale(1.05);
+}
+
+.V {
+  position: absolute;
+  margin: -3px;
+  z-index: 1;
+  border-radius: 0 10px;
+  background-color: #5b6c6c;
+  box-shadow: -2px 2px 2px 2px black;
+  height: calc(var(--cell) / 4);
+  width: calc(var(--cell) / 4);
+  right: 0;
+}
+
+.V::before {
+  content: "+";
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  line-height: calc(var(--cell) / 4);
+  text-align: center;
+  width: 100%;
+}
+
+.cell:hover .V {
+  background-color: white;
+}
+
+.hide {
+  display: none !important;
+}
+
+h1 { /* for AppName */
+  font-size: 1.5em;
+  display: inline;
+  font-weight: bold;
+  line-height: 1;
+}
+
+h3,
+h4 {
+  display: inline-block;
+}
+
+h3 { /* заголовок у логотипа */
+  font-weight: bold;
+}
+
+h2 { /* подзаголовок у логотипа */
+  font-weight: normal;
+  font-size: 0.8em;
+}
+
+h3::before {
+  content: "└ ";
+}
+
+b {
+  color: #5e5e5e;
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
+  font-weight: normal;
+  font-size: 0.8em;
+}
