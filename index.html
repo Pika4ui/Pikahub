@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIDAA Магазин</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      font-size: 24px;
+      margin: 0;
+      height: 100vh;
+      line-height: 1.6;
+      text-align: center;
+    }
+    #result {
+      max-width: 90%;
+      padding: 20px;
+    }
+    h3 {
+      color: #ffcc00;
+      margin-bottom: 20px;
+    }
+    button, .btn {
+      background: linear-gradient(to right, #ff6f00, #ffcc00);
+      border: none;
+      color: black;
+      font-weight: bold;
+      padding: 14px 32px;
+      font-size: 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    .note {
+      font-size: 16px;
+      color: #aaa;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="result">
+    <h3>Отлично!</h3>
+    <p>Всё проверили — на вашем ТВ VIDAA 9</p>
+    <button onclick="window.location.href='/4/index.html'">
+      Перейти в магазин
+    </button>
+    <p class="note">⚠️ Для демонстрации — работает без авторизации</p>
+  </div>
+</body>
+</html>
