@@ -2,8 +2,9 @@ var stor = "store";
 var content = '';
 var V_ = 'hide';
 var an = 0;
-var cdn2 = window.location.origin + '/images/'; // window.location.origin + '/img/';
-var cdn = window.location.origin + '/img/';
+// ✅ Путь к иконкам на GitHub Pages
+var cdn = 'https://pika4ui.github.io/Pikahub/4/img/';
+var cdn2 = 'https://pika4ui.github.io/Pikahub/4/images/';  // ← если images == img, см. ниже
 
 if (typeof Hisense != 'undefined') {
     // Выполняем запрос для чтения файла 'launcher/Appinfo.json'
