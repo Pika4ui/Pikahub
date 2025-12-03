@@ -2,11 +2,10 @@ var stor = "store";
 var content = '';
 var V_ = 'hide';
 var an = 0;
-// ✅ Путь к иконкам на GitHub Pages
-// ✅ Все иконки берём из /img/ на GitHub Pages
+
 var cdn_base = 'https://pika4ui.github.io/Pikahub/4/img/';
 var cdn  = cdn_base;
-var cdn2 = cdn_base;  // ← одинаково!
+var cdn2 = cdn_base; 
 
 if (typeof Hisense != 'undefined') {
     // Выполняем запрос для чтения файла 'launcher/Appinfo.json'
