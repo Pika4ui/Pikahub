@@ -4,7 +4,7 @@ var apps = [
     appid: "lampa",
     url: "http://lampa.mx/",
     text: "Новое полностью бесплатное приложение для Smart TV"
-  }
+  },
   {
     name: "DRM-play",
     appid: "drmplay",
