@@ -1,62 +1,85 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIDAA Магазин</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: black;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      color: #fff;
-      font-size: 24px;
-      margin: 0;
-      height: 100vh;
-      line-height: 1.6;
-      text-align: center;
+<script>
+  var OS = '';
+  var verOS;
+  var url;
+  var isSupported = true;
+
+  try {
+    OS = Hisense_GetOSVersion();
+  } catch (err) {
+    if (typeof Hisense_GetDeviceID == 'function') {
+      str = Hisense_GetDeviceID();
+      const macRegex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+      if (macRegex.test(str)) {
+        OS = 'U3';
+      }
+    } else if (typeof Hisense != 'undefined' || typeof HiBrowser != 'undefined') {
+      OS = 'old';
     }
-    #result {
-      max-width: 90%;
-      padding: 20px;
+  }
+
+  switch (true) {
+    case /^U09\./.test(OS):
+      verOS = '9';
+      break;
+
+    case /^U08\./.test(OS):
+      verOS = '8';
+      break;
+
+    case OS.indexOf("U4") >= 0:
+      verOS = '4';
+      url = '/4/index.html';
+      break;
+
+    case OS.indexOf("U3") >= 0:
+      verOS = '3';
+      url = '/3/index.html';
+      break;
+
+    case OS.indexOf("old") >= 0:
+      verOS = 'динозавр';
+      url = '/old/index.html';
+      break;
+
+    case OS.indexOf("U5") >= 0:
+    case OS.indexOf("U05") >= 0:
+      verOS = 'VIDAA 5 обнаружена НО пока не поддерживается';
+      isSupported = false;
+      break;
+
+    case OS.indexOf("U6") >= 0:
+    case OS.indexOf("U06") >= 0:
+      verOS = 'VIDAA 6 обнаружена НО пока не поддерживается';
+      isSupported = false;
+      break;
+
+    case OS.indexOf("U7") >= 0:
+    case OS.indexOf("U07") >= 0:
+      verOS = 'VIDAA 7 обнаружена НО пока не поддерживается';
+      isSupported = false;
+      break;
+
+    default:
+      verOS = 'К сожалению, ваше устройство не поддерживается';
+      isSupported = false;
+  }
+
+  var support;
+  if (isSupported) {
+    // Устанавливаем URL для VIDAA 8 и 9
+    if (verOS === '9') {
+      url = '/9/index.html'; // ← измените при необходимости
+    } else if (verOS === '8') {
+      url = '/8/index.html'; // ← измените при необходимости
     }
-    h3 {
-      color: #ffcc00;
-      margin-bottom: 20px;
-    }
-    button, .btn {
-      background: linear-gradient(to right, #ff6f00, #ffcc00);
-      border: none;
-      color: black;
-      font-weight: bold;
-      padding: 14px 32px;
-      font-size: 22px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    button:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-    .note {
-      font-size: 16px;
-      color: #aaa;
-      margin-top: 30px;
-    }
-  </style>
-</head>
-<body>
-  <div id="result">
-    <h3>Отлично!</h3>
-    <p>Всё проверили — на вашем ТВ VIDAA 9</p>
-    <button onclick="window.location.href='/4/index.html'">
-      Перейти в магазин
-    </button>
-    <p class="note">⚠️ Для демонстрации — работает без авторизации</p>
-  </div>
-</body>
-</html>
+
+    support =
+      '<div><h3>Отлично!</h3>Всё проверили — на вашем ТВ VIDAA ' + verOS + '</div>' +
+      '<button onclick="window.location.href=\'' + url + '\'">Перейти в магазин</button>';
+  } else {
+    support = '<div>' + verOS + '</div>';
+  }
+
+  document.getElementById('result').innerHTML = support;
+</script>
