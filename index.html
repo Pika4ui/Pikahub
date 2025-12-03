@@ -1,85 +1,144 @@
-<script>
-  var OS = '';
-  var verOS;
-  var url;
-  var isSupported = true;
-
-  try {
-    OS = Hisense_GetOSVersion();
-  } catch (err) {
-    if (typeof Hisense_GetDeviceID == 'function') {
-      str = Hisense_GetDeviceID();
-      const macRegex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
-      if (macRegex.test(str)) {
-        OS = 'U3';
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Магазин приложений для Vidaa</title>
+  <style>
+    body {
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      overflow-y: auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .app {
+      position: relative;
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .app:hover {
+      transform: scale(1.05);
+      background: #2c2c2c;
+    }
+    .app img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-bottom: 5px;
+    }
+    .app span {
+      display: block;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .new-dot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+    }
+    .instructions {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+    .instructions h3 {
+      margin-top: 0;
+    }
+    @media (max-width: 768px) {
+      .app-grid {
+        grid-template-columns: repeat(5, 1fr);
       }
-    } else if (typeof Hisense != 'undefined' || typeof HiBrowser != 'undefined') {
-      OS = 'old';
     }
-  }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Магазин приложений для Vidaa TV</h1>
+    <p>Выберите приложение и нажмите OK на пульте</p>
+  </div>
 
-  switch (true) {
-    case /^U09\./.test(OS):
-      verOS = '9';
-      break;
+  <div class="app-grid" id="appGrid">
+    <!-- Приложения будут подгружены через JS -->
+  </div>
 
-    case /^U08\./.test(OS):
-      verOS = '8';
-      break;
+  <div class="instructions">
+    <h3>Как использовать:</h3>
+    <ol>
+      <li>Откройте браузер на телевизоре.</li>
+      <li>Введите адрес: <strong>http://ваш_домен/apps</strong> (например, http://lampa.site/apps)</li>
+      <li>Выберите нужное приложение и нажмите кнопку «OK» на пульте.</li>
+      <li>При необходимости повторите для других приложений.</li>
+      <li>Перезагрузите телевизор: выключите и включите его с помощью пульта, но лучше выдернуть шнур из розетки.</li>
+      <li>После перезагрузки откройте лаунчер (главный экран). Новые приложения будут доступны в конце списка; обычно они отмечены зелёной точкой.</li>
+    </ol>
+  </div>
 
-    case OS.indexOf("U4") >= 0:
-      verOS = '4';
-      url = '/4/index.html';
-      break;
+  <script>
+    // Список приложений — Lampa добавлено, всё связанное с jacred/torr удалено
+    const apps = [
+      { name: "Lampa", url: "https://lampa.run", new: true },
+      { name: "YouTube", url: "https://www.youtube.com", new: false },
+      { name: "Twitch", url: "https://www.twitch.tv", new: true },
+      { name: "Кинопоиск", url: "https://www.kinopoisk.ru", new: false },
+      { name: "Wink", url: "https://wink.ru", new: false },
+      { name: "iCinema", url: "https://icinema.ru", new: true },
+      { name: "Viju", url: "https://viju.ru", new: false },
+      { name: "Netflix", url: "https://www.netflix.com", new: false },
+      { name: "Disney+", url: "https://www.disneyplus.com", new: false },
+      { name: "VK Video", url: "https://vk.com/video", new: true },
+      { name: "Vevo", url: "https://vevo.com", new: false },
+      { name: "Spotify", url: "https://open.spotify.com", new: false },
+      { name: "Google", url: "https://google.com", new: false },
+      { name: "Telegram", url: "https://web.telegram.org", new: false },
+      { name: "Aster Black", url: "https://asterblack.ru", new: true },
+      { name: "IPTV", url: "https://iptv.org", new: false },
+      { name: "TikTok", url: "https://tiktok.com", new: false },
+      { name: "Apple TV+", url: "https://tv.apple.com", new: false },
+      { name: "AMEDIATEKA", url: "https://amediateka.ru", new: true },
+      { name: "Start", url: "https://start.ru", new: false }
+    ];
 
-    case OS.indexOf("U3") >= 0:
-      verOS = '3';
-      url = '/3/index.html';
-      break;
+    const appGrid = document.getElementById('appGrid');
 
-    case OS.indexOf("old") >= 0:
-      verOS = 'динозавр';
-      url = '/old/index.html';
-      break;
-
-    case OS.indexOf("U5") >= 0:
-    case OS.indexOf("U05") >= 0:
-      verOS = 'VIDAA 5 обнаружена НО пока не поддерживается';
-      isSupported = false;
-      break;
-
-    case OS.indexOf("U6") >= 0:
-    case OS.indexOf("U06") >= 0:
-      verOS = 'VIDAA 6 обнаружена НО пока не поддерживается';
-      isSupported = false;
-      break;
-
-    case OS.indexOf("U7") >= 0:
-    case OS.indexOf("U07") >= 0:
-      verOS = 'VIDAA 7 обнаружена НО пока не поддерживается';
-      isSupported = false;
-      break;
-
-    default:
-      verOS = 'К сожалению, ваше устройство не поддерживается';
-      isSupported = false;
-  }
-
-  var support;
-  if (isSupported) {
-    // Устанавливаем URL для VIDAA 8 и 9
-    if (verOS === '9') {
-      url = '/9/index.html'; // ← измените при необходимости
-    } else if (verOS === '8') {
-      url = '/8/index.html'; // ← измените при необходимости
-    }
-
-    support =
-      '<div><h3>Отлично!</h3>Всё проверили — на вашем ТВ VIDAA ' + verOS + '</div>' +
-      '<button onclick="window.location.href=\'' + url + '\'">Перейти в магазин</button>';
-  } else {
-    support = '<div>' + verOS + '</div>';
-  }
-
-  document.getElementById('result').innerHTML = support;
-</script>
+    apps.forEach(app => {
+      const div = document.createElement('div');
+      div.className = 'app';
+      // Используем первую букву названия как placeholder (можно заменить на реальные иконки позже)
+      div.innerHTML = `
+        <img src="https://via.placeholder.com/48?text=${app.name.substring(0,1)}" alt="${app.name}">
+        ${app.new ? '<div class="new-dot"></div>' : ''}
+        <span>${app.name}</span>
+      `;
+      div.onclick = () => {
+        window.location.href = app.url;
+      };
+      appGrid.appendChild(div);
+    });
+  </script>
+</body>
+</html>
